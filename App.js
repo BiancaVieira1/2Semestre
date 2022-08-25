@@ -3,14 +3,14 @@ import { ImageBackground, StyleSheet, Text, View, TextInput, TouchableOpacity } 
 import Tempo from './components/Tempo';
 import Api from './components/Api';
 
-const image ={ uri: "https://th.bing.com/th/id/R.246ec445d763797545aa558fd3953e20?rik=Sa0%2f6cPVOmPC2A&pid=ImgRaw&r=0"};
+const image ={ uri: "https://s2.glbimg.com/i8VjhVl-vNMxp_TDUSQB2JJNo1I=/0x0:1029x1593/600x0/smart/filters:gifv():strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2022/6/c/aQOMcrQCG36ysJ6dNCHg/ceu-colorido.png"};
 
 export default function App() {
   const [dados, setDados] = useState("");
-
+  const [cidade, setCidade] = useState("");
 
 async function carregaDados(){
-  const response = await Api.get(`weather?array_limit=1&fields=only_results,temp,city_name,description,forecast,max,min,date&key=c1a382c9&city_name=mongagua,SP`)
+  const response = await Api.get(`weather?array_limit=2&fields=only_results,temp,city_name,time,forecast,max,min,date,description&key=c1a382c9&city_name=${cidade}`)
    setDados(response.data.forecast[0]);
 }
   return (
@@ -22,14 +22,16 @@ async function carregaDados(){
     }}source={image}>
 </ImageBackground>
       <View>
-         <Text style={styles.titulo}> Bem Vinda(o) á </Text>
-          <Text style={styles.titulo}> Previsão do Tempo</Text>
+        <Text></Text>
+         <Text style={styles.titulo}> Bem Vinda(o) a Previsão do Tempo</Text>
         </View>
+        <Text></Text>
         <View style={styles.bloco}>
           <Text style={styles.label}> Cidade: </Text>
           <TextInput 
-          placeholder="Digite o nome da Cidade"
+          placeholder=" Digite o nome da Cidade"
           style={styles.input}
+          onChangeText = {(value)=>setCidade(value)}
           />
       </View>
       <View style={styles.bloco}>
@@ -49,17 +51,19 @@ async function carregaDados(){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#6495ED'
+    backgroundColor: '#fff',
+     borderRadius: 10,
+     opacity: 0.9
   },
   titulo:{
-    fontSize: 28,
+    fontSize: 25,
     textAlign: 'center',
     marginTop: 20,
     top: 20
   },
   label:{
     fontSize: 20,
-    top: 10
+    top: 1
   },
   bloco:{
     marginTop: 30,
@@ -67,9 +71,9 @@ const styles = StyleSheet.create({
   },
   input:{
     borderBottomWidth: 2,
-    width: '80%',
+    width: '90%',
     fontSize: 20,
-    top: 10
+    top: 1
   },
   botao:{
     width: '80%',
